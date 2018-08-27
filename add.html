@@ -1,0 +1,24 @@
+<html>
+
+<body>
+    <script src="wasm_exec.js"></script>
+    <script type="text/javascript">
+        (async () => {
+            // Initialize
+            const go = new Go();
+            let { module, instance } = await WebAssembly.instantiateStreaming(fetch("add.wasm"), go.importObject);
+            await go.run(instance);
+            instance = await WebAssembly.instantiate(module, go.importObject);
+        })();
+    </script>
+
+    <div style="display: flex; flex-flow: column;width: 10%">
+        <input type="number" id="operand_1">
+        <input type="number" id="operand_2">
+        <button id="add">Add</button>
+        <div id="result">N/A</div>
+    </div>
+
+</body>
+
+</html>
